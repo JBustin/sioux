@@ -1,0 +1,14 @@
+.vscode
+.coverage
+.vscode
+.git
+.env
+.env.template
+.estlintignore
+.eslintrc.js
+.prettierrc
+node_modules
+tmp
+tests
+vhosts
+formatters
