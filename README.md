@@ -100,6 +100,21 @@ module.exports = ({ env, content }) => {
 }
 ```
 
+If you use the same formatter for each vhost, you can create a default formatter at the root of the vhosts directory with the name _default-formatter.js_ like this :
+
+```
+root
+  |- .env
+  |- vhosts
+     |- default-formatter.js
+     |- foo.vhost.conf
+     |- foo.vhost.conf.js
+     |- foo.vhost.conf.spec.js
+     |- bar.vhost.conf
+     |- bar.vhost.conf.js
+     |- bar.vhost.conf.spec.js
+```
+
 ## Built With
 
 - [chaijs](https://www.chaijs.com/) - Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
