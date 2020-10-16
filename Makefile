@@ -4,7 +4,7 @@ LOCAL_IP := $(shell ipconfig getifaddr en0)
 # Docker image version
 DK_REGISTRY ?= jbustin1/
 
-DK_SIO_VERSION ?= 0.2.1
+DK_SIO_VERSION ?= 0.3.0
 DK_SIO_NAME ?= sioux
 DK_SIO_ID ?= $(shell docker ps | grep -F "$(DK_SIO_NAME):$(DK_SIO_VERSION)" | awk '{ print $$1 }')
 DK_SIO_IMAGE ?= $(DK_REGISTRY)$(DK_SIO_NAME):$(DK_SIO_VERSION)
@@ -25,12 +25,14 @@ push: ## Push sioux
 dev: ## Run sioux for dev
 	@docker run --rm \
 	-v ${WORKSPACE}/lib:/usr/app/lib \
+	-v ${WORKSPACE}/vhosts:/usr/app/tests \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
 run: ## Run sioux
 	@docker run --rm \
+	-v ${WORKSPACE}/vhosts:/usr/app/tests \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
@@ -41,12 +43,14 @@ build-and-run: ## Build and run sioux
 
 interactive: ## Run sioux in interactive mode
 	@docker run --rm -it \
+	-v ${WORKSPACE}/vhosts:/usr/app/tests \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
 
 dev-interactive: ## Run dev sioux in interactive mode
 	@docker run --rm -it \
+	-v ${WORKSPACE}/vhosts:/usr/app/tests \
 	-v ${WORKSPACE}/lib:/usr/app/lib \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
