@@ -9,4 +9,12 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {},
+  globals: {
+    test: true,
+    httpBackend: true,
+    suite: true,
+    expect: true,
+    fetch: true,
+    context: true,
+  },
 }

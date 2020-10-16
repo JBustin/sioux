@@ -10,25 +10,25 @@ You need docker, an access to your apache configuration, and some javascript kno
 
 ### Installing
 
-Sioux uses 4 resources : 
-- vhosts: a directory with the vhosts you want to test
-- tests: a directory with the unit test files
-- formatters: a directory with the vhosts formatters (or transformers)
+Sioux uses 4 resources :
+
+- vhosts: a directory with vhost files (can contain some subdirectories)
+- tests: spec.js files to test vhost files
+- formatters: some js files to format vhost files before mounting in apache
 - .env: need to pass some constants
 
 Tree example:
 
 ```
 root
-  |- vhosts 
+  |- .env
+  |- vhosts
      |- foo.vhost.conf
+     |- foo.vhost.conf.js
+     |- foo.vhost.conf.spec.js
      |- bar.vhost.conf
-  |- tests
-     |- foo.vhost.conf.js
      |- bar.vhost.conf.js
-  |- formatters
-     |- foo.vhost.conf.js
-     |- bar.vhost.conf.js
+     |- bar.vhost.conf.spec.js
 ```
 
 When all resources are ready, just do :
@@ -36,9 +36,7 @@ When all resources are ready, just do :
 ```
 cp .env.template .env
 docker run --rm \
--v ${WORKSPACE}/formatters:/usr/app/formatters \
 -v ${WORKSPACE}/vhosts:/usr/app/vhosts \
--v ${WORKSPACE}/tests:/usr/app/tests \
 -v ${WORKSPACE}/.env:/usr/app/.env \
 jbustin1/sioux
 ```
@@ -47,6 +45,7 @@ jbustin1/sioux
 
 This project has its own test runner. Expectations come from chaijs.
 Instructions:
+
 - suite: display a name for your suite
 - context: display a context for a suite of tests
 - test: create a test
@@ -59,13 +58,13 @@ suite(__filename)
 context('200')
 
 test('My route should respond by 200 status code', async () => {
-    const { status } = await fetch(`http://www.mydomain.com/foo`)
-    const { headers: { host } = {}, url } = httpBackend.unqueue()
+  const { status } = await fetch(`http://www.mydomain.com/foo`)
+  const { headers: { host } = {}, url } = httpBackend.unqueue()
 
-    expect(status).to.equal(200)
-    expect(host).to.contains('new.backend.com')
-    expect(url).to.equal('foo')
-    expect(httpBackend.noExpectations()).to.be.true
+  expect(status).to.equal(200)
+  expect(host).to.contains('new.backend.com')
+  expect(url).to.equal('foo')
+  expect(httpBackend.noExpectations()).to.be.true
 })
 ```
 
@@ -73,7 +72,7 @@ test('My route should respond by 200 status code', async () => {
 
 A formatter is used to extract the part of the apache vhost you want (or you can) test. It's a js function that takes environment variables and a vhost content.
 
-Example: 
+Example:
 
 ```js
 module.exports = ({ env, content }) => {
@@ -103,7 +102,7 @@ module.exports = ({ env, content }) => {
 
 ## Built With
 
-* [chaijs](https://www.chaijs.com/) - Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
+- [chaijs](https://www.chaijs.com/) - Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
 
 ## Contributing
 
@@ -111,7 +110,7 @@ _Incoming_
 
 ## Versioning
 
-_Incoming_ 
+_Incoming_
 
 ## Authors
 
