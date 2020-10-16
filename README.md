@@ -17,6 +17,12 @@ Sioux uses 4 resources :
 - formatters: some js files to format vhost files before mounting in apache
 - .env: need to pass some constants
 
+### Tests organization
+
+Two modes: SPEC or DIR.
+
+In SPEC mode, test files should be in the same directory as the vhost file, with the same name.
+
 Tree example:
 
 ```
@@ -24,11 +30,28 @@ root
   |- .env
   |- vhosts
      |- foo.vhost.conf
-     |- foo.vhost.conf.js
-     |- foo.vhost.conf.spec.js
+     |- foo.vhost.js
+     |- foo.vhost.spec.js
      |- bar.vhost.conf
-     |- bar.vhost.conf.js
-     |- bar.vhost.conf.spec.js
+     |- bar.vhost.js
+     |- bar.vhost.spec.js
+```
+
+In DIR mode, test files should be in a dedicated directory.
+
+Tree example:
+
+```
+root
+  |- .env
+  |- tests
+     |- foo.vhost.js
+     |- foo.vhost.spec.js
+     |- bar.vhost.js
+     |- bar.vhost.spec.js
+  |- vhosts
+     |- foo.vhost.conf
+     |- bar.vhost.conf
 ```
 
 When all resources are ready, just do :
@@ -68,7 +91,7 @@ test('My route should respond by 200 status code', async () => {
 })
 ```
 
-## Formatters
+## Formatters (optional)
 
 A formatter is used to extract the part of the apache vhost you want (or you can) test. It's a js function that takes environment variables and a vhost content.
 
@@ -100,7 +123,7 @@ module.exports = ({ env, content }) => {
 }
 ```
 
-If you use the same formatter for each vhost, you can create a default formatter at the root of the vhosts directory with the name _default-formatter.js_ like this :
+If you use the same formatter for each vhost, you can create a default formatter at the root of the vhosts directory (or tests directory in MODE=DIR) with the name _default-formatter.js_ like this :
 
 ```
 root
