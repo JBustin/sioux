@@ -25,17 +25,13 @@ push: ## Push sioux
 dev: ## Run sioux for dev
 	@docker run --rm \
 	-v ${WORKSPACE}/lib:/usr/app/lib \
-	-v ${WORKSPACE}/formatters:/usr/app/formatters \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/tests:/usr/app/tests \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
 run: ## Run sioux
 	@docker run --rm \
-	-v ${WORKSPACE}/formatters:/usr/app/formatters \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/tests:/usr/app/tests \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
@@ -45,17 +41,13 @@ build-and-run: ## Build and run sioux
 
 interactive: ## Run sioux in interactive mode
 	@docker run --rm -it \
-	-v ${WORKSPACE}/formatters:/usr/app/formatters \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/tests:/usr/app/tests \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
 
 dev-interactive: ## Run dev sioux in interactive mode
 	@docker run --rm -it \
 	-v ${WORKSPACE}/lib:/usr/app/lib \
-	-v ${WORKSPACE}/formatters:/usr/app/formatters \
 	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/tests:/usr/app/tests \
 	-v ${WORKSPACE}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
