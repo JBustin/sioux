@@ -4,6 +4,7 @@ RUN mkdir -p /usr/app /opt
 COPY entrypoint.sh /opt
 RUN chmod +x /opt/entrypoint.sh
 WORKDIR /usr/app
-COPY . .
+COPY package* ./
 RUN npm install --no-save --production
+COPY . .
 CMD ["sh", "/opt/entrypoint.sh"]

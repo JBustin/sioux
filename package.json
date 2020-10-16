@@ -2,9 +2,9 @@
   "name": "docker",
   "version": "1.0.0",
   "description": "Mount and test vhost (rewrite rules)",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node lib/index",
     "generate:hosts": "node lib/generate-hosts",
     "generate:conf": "node lib/generate-conf",
     "lint": "eslint --ext .js --ignore-path .eslintignore .",
