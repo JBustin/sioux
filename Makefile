@@ -1,4 +1,3 @@
-WORKSPACE := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 LOCAL_IP := $(shell ipconfig getifaddr en0)
 
 # Docker image version
@@ -24,17 +23,17 @@ push: ## Push sioux
 
 dev: ## Run sioux for dev
 	@docker run --rm \
-	-v ${WORKSPACE}/lib:/usr/app/lib \
-	-v ${WORKSPACE}/vhosts:/usr/app/tests \
-	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/.env:/usr/app/.env \
+	-v ${PWD}/lib:/usr/app/lib \
+	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/vhosts:/usr/app/vhosts \
+	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
 run: ## Run sioux
 	@docker run --rm \
-	-v ${WORKSPACE}/vhosts:/usr/app/tests \
-	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/.env:/usr/app/.env \
+	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/vhosts:/usr/app/vhosts \
+	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
 build-and-run: ## Build and run sioux
@@ -43,15 +42,15 @@ build-and-run: ## Build and run sioux
 
 interactive: ## Run sioux in interactive mode
 	@docker run --rm -it \
-	-v ${WORKSPACE}/vhosts:/usr/app/tests \
-	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/.env:/usr/app/.env \
+	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/vhosts:/usr/app/vhosts \
+	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
 
 dev-interactive: ## Run dev sioux in interactive mode
 	@docker run --rm -it \
-	-v ${WORKSPACE}/vhosts:/usr/app/tests \
-	-v ${WORKSPACE}/lib:/usr/app/lib \
-	-v ${WORKSPACE}/vhosts:/usr/app/vhosts \
-	-v ${WORKSPACE}/.env:/usr/app/.env \
+	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/lib:/usr/app/lib \
+	-v ${PWD}/vhosts:/usr/app/vhosts \
+	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
