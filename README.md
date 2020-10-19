@@ -59,8 +59,8 @@ When all resources are ready, just do :
 ```
 cp .env.template .env
 docker run --rm \
--v ${WORKSPACE}/vhosts:/usr/app/vhosts \
--v ${WORKSPACE}/.env:/usr/app/.env \
+-v ${PWD}/vhosts:/usr/app/vhosts \
+-v ${PWD}/.env:/usr/app/.env \
 jbustin1/sioux
 ```
 
