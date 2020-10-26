@@ -3,7 +3,7 @@ LOCAL_IP := $(shell ipconfig getifaddr en0)
 # Docker image version
 DK_REGISTRY ?= jbustin1/
 
-DK_SIO_VERSION ?= 0.3.0
+DK_SIO_VERSION ?= 0.4.0
 DK_SIO_NAME ?= sioux
 DK_SIO_ID ?= $(shell docker ps | grep -F "$(DK_SIO_NAME):$(DK_SIO_VERSION)" | awk '{ print $$1 }')
 DK_SIO_IMAGE ?= $(DK_REGISTRY)$(DK_SIO_NAME):$(DK_SIO_VERSION)
