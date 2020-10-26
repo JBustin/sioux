@@ -24,7 +24,7 @@ push: ## Push sioux
 dev: ## Run sioux for dev
 	@docker run --rm \
 	-v ${PWD}/lib:/usr/app/lib \
-	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/tests:/usr/app/tests \
 	-v ${PWD}/vhosts:/usr/app/vhosts \
 	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
