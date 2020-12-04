@@ -154,6 +154,10 @@ _Incoming_
 
 _Incoming_
 
+## Todo
+
+- json mode: launch only one test
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
