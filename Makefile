@@ -3,10 +3,11 @@ LOCAL_IP := $(shell ipconfig getifaddr en0)
 # Docker image version
 DK_REGISTRY ?= jbustin1/
 
-DK_SIO_VERSION ?= 0.4.0
+DK_SIO_VERSION ?= 0.5.0
 DK_SIO_NAME ?= sioux
 DK_SIO_ID ?= $(shell docker ps | grep -F "$(DK_SIO_NAME):$(DK_SIO_VERSION)" | awk '{ print $$1 }')
 DK_SIO_IMAGE ?= $(DK_REGISTRY)$(DK_SIO_NAME):$(DK_SIO_VERSION)
+DK_SIO_LATEST ?= $(DK_REGISTRY)$(DK_SIO_NAME):latest
 
 .DEFAULT_GOAL := help
 
@@ -18,8 +19,22 @@ help: ## Display this help
 build: ## Build sioux
 	@docker build -t ${DK_SIO_IMAGE} .
 
+build-latest: ## Build latest sioux
+	@docker build -t ${DK_SIO_LATEST} .
+
 push: ## Push sioux
 	@docker push ${DK_SIO_IMAGE}
+
+push-latest: ## Push latest sioux
+	@docker push $(DK_SIO_LATEST)
+
+build-and-push: ## Build and push
+	@make build
+	@make push
+
+build-and-push-latest: ## Build and push latest
+	@make build-latest
+	@make push-latest
 
 dev: ## Run sioux for dev
 	@docker run --rm \
@@ -31,14 +46,14 @@ dev: ## Run sioux for dev
 
 run: ## Run sioux
 	@docker run --rm \
-	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/tests:/usr/app/tests \
 	-v ${PWD}/vhosts:/usr/app/vhosts \
 	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE}
 
 build-and-run: ## Build and run sioux
-	@docker build
-	@docker run
+	@make build
+	@make run
 
 interactive: ## Run sioux in interactive mode
 	@docker run --rm -it \
