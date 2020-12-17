@@ -91,6 +91,45 @@ test('My route should respond by 200 status code', async () => {
 })
 ```
 
+## JSON format
+
+You can use JSON format to write your unit tests.
+
+Example:
+
+```json
+{
+  "tests": [
+    {
+      "name": "200, balance to node",
+      "expectations": { "backend": "node.backend.com", "httpStatusCode": 200 },
+      "rules": [
+        { "host": "www-int.my-domain.com", "pathname": "/assets/foo" },
+        {
+          "host": "us-int.my-domain.com",
+          "pathname": "/eng-us/checkout",
+          "headers": {
+            "cookie": "foo=true"
+          }
+        }
+      ]
+    },
+    {
+      "name": "200, balance to legacy",
+      "expectations": { "backend": "legacy.backend.com", "httpStatusCode": 200 },
+      "rules": [
+        {
+          "host": "us-int.my-domain.com",
+          "pathname": "/eng-us/checkout"
+        }
+      ]
+    }
+  ]
+}
+```
+
+_JSON API incoming_
+
 ## Formatters (optional)
 
 A formatter is used to extract the part of the apache vhost you want (or you can) test. It's a js function that takes environment variables and a vhost content.
@@ -136,6 +175,16 @@ root
      |- bar.vhost.conf
      |- bar.vhost.conf.js
      |- bar.vhost.conf.spec.js
+```
+
+## Use prettier as code formater
+
+You can use it like this:
+
+```sh
+docker run --rm -it \
+-v ${PWD}/vhosts:/usr/app/tests \
+jbustin1/sioux ./node_modules/.bin/prettier --write 'tests/*.{js,json}'
 ```
 
 ## Built With
