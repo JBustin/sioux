@@ -183,7 +183,7 @@ You can use it like this:
 
 ```sh
 docker run --rm -it \
--v ${PWD}/vhosts:/usr/app/tests \
+-v ${PWD}/tests:/usr/app/tests \
 jbustin1/sioux ./node_modules/.bin/prettier --write 'tests/*.{js,json}'
 ```
 
