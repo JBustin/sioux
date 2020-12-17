@@ -3,7 +3,7 @@ LOCAL_IP := $(shell ipconfig getifaddr en0)
 # Docker image version
 DK_REGISTRY ?= jbustin1/
 
-DK_SIO_VERSION ?= 0.5.0
+DK_SIO_VERSION ?= 0.6.0
 DK_SIO_NAME ?= sioux
 DK_SIO_ID ?= $(shell docker ps | grep -F "$(DK_SIO_NAME):$(DK_SIO_VERSION)" | awk '{ print $$1 }')
 DK_SIO_IMAGE ?= $(DK_REGISTRY)$(DK_SIO_NAME):$(DK_SIO_VERSION)
@@ -69,3 +69,8 @@ dev-interactive: ## Run dev sioux in interactive mode
 	-v ${PWD}/vhosts:/usr/app/vhosts \
 	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
+
+format: ## Format test files (as user)
+	@docker run --rm -it \
+	-v ${PWD}/vhosts:/usr/app/tests \
+	${DK_SIO_IMAGE} ./node_modules/.bin/prettier --write 'tests/*.{js,json}'
