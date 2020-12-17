@@ -57,14 +57,14 @@ build-and-run: ## Build and run sioux
 
 interactive: ## Run sioux in interactive mode
 	@docker run --rm -it \
-	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/tests:/usr/app/tests \
 	-v ${PWD}/vhosts:/usr/app/vhosts \
 	-v ${PWD}/.env:/usr/app/.env \
 	${DK_SIO_IMAGE} bash
 
 dev-interactive: ## Run dev sioux in interactive mode
 	@docker run --rm -it \
-	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/tests:/usr/app/tests \
 	-v ${PWD}/lib:/usr/app/lib \
 	-v ${PWD}/vhosts:/usr/app/vhosts \
 	-v ${PWD}/.env:/usr/app/.env \
@@ -72,5 +72,5 @@ dev-interactive: ## Run dev sioux in interactive mode
 
 format: ## Format test files (as user)
 	@docker run --rm -it \
-	-v ${PWD}/vhosts:/usr/app/tests \
+	-v ${PWD}/tests:/usr/app/tests \
 	${DK_SIO_IMAGE} ./node_modules/.bin/prettier --write 'tests/*.{js,json}'
